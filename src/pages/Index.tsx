@@ -33,31 +33,35 @@ type Order = {
 
 const Index = () => {
   const [materials, setMaterials] = useState<Material[]>([
-    { id: 1, name: 'Винт M4x10', description: 'Стальной винт с потайной головкой', currentStock: 160, minStock: 50, status: 'normal' },
-    { id: 2, name: 'Гайка M4', description: 'Шестигранная гайка', currentStock: 160, minStock: 80, status: 'normal' },
-    { id: 3, name: 'Шайба 4мм', description: 'Пружинная шайба', currentStock: 50, minStock: 100, status: 'low' },
-    { id: 4, name: 'Болт M6x20', description: 'Болт с шестигранной головкой', currentStock: 35, minStock: 30, status: 'normal' },
-    { id: 5, name: 'Подшипник 6202', description: 'Шариковый подшипник', currentStock: 55, minStock: 15, status: 'normal' },
+    { id: 1, name: 'Алюминиевый профиль 40x40', description: 'Профиль для каркасных конструкций', currentStock: 25, minStock: 50, status: 'low' },
+    { id: 2, name: 'Листовая сталь 2мм', description: 'Холоднокатаный лист 1000x2000мм', currentStock: 8, minStock: 15, status: 'critical' },
+    { id: 3, name: 'Электродвигатель АИР71', description: 'Асинхронный двигатель 0.55кВт', currentStock: 120, minStock: 30, status: 'normal' },
+    { id: 4, name: 'Резиновый уплотнитель', description: 'Уплотнитель EPDM 10x5мм', currentStock: 450, minStock: 200, status: 'normal' },
+    { id: 5, name: 'Промышленный клей ПВА', description: 'Клей для дерева 5кг', currentStock: 18, minStock: 25, status: 'low' },
+    { id: 6, name: 'Подшипник SKF 6205', description: 'Радиальный шарикоподшипник', currentStock: 340, minStock: 100, status: 'normal' },
   ]);
 
   const [operations] = useState<Operation[]>([
-    { id: 1, materialId: 1, type: 'incoming', quantity: 50, timestamp: '2025-10-09T19:04:25' },
-    { id: 2, materialId: 2, type: 'incoming', quantity: 200, timestamp: '2025-10-09T19:10:05' },
-    { id: 3, materialId: 3, type: 'incoming', quantity: 150, timestamp: '2025-10-09T19:10:14' },
-    { id: 4, materialId: 4, type: 'incoming', quantity: 25, timestamp: '2025-10-09T19:10:21' },
-    { id: 5, materialId: 5, type: 'incoming', quantity: 10, timestamp: '2025-10-09T19:10:28' },
-    { id: 6, materialId: 2, type: 'incoming', quantity: 100, timestamp: '2025-10-09T19:10:50' },
-    { id: 7, materialId: 2, type: 'outgoing', quantity: 200, timestamp: '2025-10-09T19:10:58' },
-    { id: 8, materialId: 2, type: 'outgoing', quantity: 30, timestamp: '2025-10-09T19:11:04' },
-    { id: 9, materialId: 2, type: 'outgoing', quantity: 25, timestamp: '2025-10-09T19:12:14' },
-    { id: 10, materialId: 1, type: 'incoming', quantity: 90, timestamp: '2025-10-09T19:13:30' },
+    { id: 1, materialId: 3, type: 'incoming', quantity: 80, timestamp: '2025-11-14T08:15:00' },
+    { id: 2, materialId: 1, type: 'incoming', quantity: 150, timestamp: '2025-11-14T09:22:14' },
+    { id: 3, materialId: 4, type: 'outgoing', quantity: 120, timestamp: '2025-11-14T10:45:30' },
+    { id: 4, materialId: 6, type: 'incoming', quantity: 200, timestamp: '2025-11-14T11:18:45' },
+    { id: 5, materialId: 2, type: 'outgoing', quantity: 5, timestamp: '2025-11-14T13:05:12' },
+    { id: 6, materialId: 5, type: 'incoming', quantity: 40, timestamp: '2025-11-14T14:30:28' },
+    { id: 7, materialId: 1, type: 'outgoing', quantity: 75, timestamp: '2025-11-15T08:12:55' },
+    { id: 8, materialId: 3, type: 'outgoing', quantity: 15, timestamp: '2025-11-15T09:40:18' },
+    { id: 9, materialId: 4, type: 'incoming', quantity: 300, timestamp: '2025-11-15T11:25:00' },
+    { id: 10, materialId: 2, type: 'incoming', quantity: 12, timestamp: '2025-11-15T15:10:42' },
+    { id: 11, materialId: 6, type: 'outgoing', quantity: 60, timestamp: '2025-11-16T07:55:30' },
+    { id: 12, materialId: 5, type: 'outgoing', quantity: 22, timestamp: '2025-11-16T10:20:05' },
   ]);
 
   const [orders] = useState<Order[]>([
-    { id: 1, materialId: 2, quantity: 90, orderDate: '2025-10-09T19:11:04', status: 'completed' },
-    { id: 2, materialId: 2, quantity: 115, orderDate: '2025-10-09T19:12:14', status: 'completed' },
-    { id: 3, materialId: 4, quantity: 35, orderDate: '2025-10-09T19:19:36', status: 'completed' },
-    { id: 4, materialId: 3, quantity: 150, orderDate: '2025-10-10T08:08:27', status: 'pending' },
+    { id: 1, materialId: 1, quantity: 100, orderDate: '2025-11-12T14:30:00', status: 'pending' },
+    { id: 2, materialId: 2, quantity: 20, orderDate: '2025-11-13T09:15:00', status: 'pending' },
+    { id: 3, materialId: 5, quantity: 50, orderDate: '2025-11-14T16:45:00', status: 'pending' },
+    { id: 4, materialId: 1, quantity: 80, orderDate: '2025-11-10T11:20:00', status: 'completed' },
+    { id: 5, materialId: 6, quantity: 150, orderDate: '2025-11-08T08:00:00', status: 'completed' },
   ]);
 
   const [newMaterial, setNewMaterial] = useState({ name: '', description: '', minStock: '' });
@@ -105,9 +109,9 @@ const Index = () => {
 
   const getOrderStatusBadge = (status: string) => {
     return status === 'completed' ? (
-      <Badge className="bg-emerald-600 hover:bg-emerald-600 text-white">COMPLETED</Badge>
+      <Badge className="bg-emerald-600 hover:bg-emerald-600 text-white">Выполнен</Badge>
     ) : (
-      <Badge className="bg-amber-600 hover:bg-amber-600 text-white">PENDING</Badge>
+      <Badge className="bg-amber-600 hover:bg-amber-600 text-white">В обработке</Badge>
     );
   };
 

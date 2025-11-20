@@ -56,7 +56,7 @@ const Index = () => {
     { id: 12, materialId: 5, type: 'outgoing', quantity: 22, timestamp: '2025-11-16T10:20:05' },
   ]);
 
-  const [orders] = useState<Order[]>([
+  const [orders, setOrders] = useState<Order[]>([
     { id: 1, materialId: 1, quantity: 100, orderDate: '2025-11-12T14:30:00', status: 'pending' },
     { id: 2, materialId: 2, quantity: 20, orderDate: '2025-11-13T09:15:00', status: 'pending' },
     { id: 3, materialId: 5, quantity: 50, orderDate: '2025-11-14T16:45:00', status: 'pending' },
@@ -65,6 +65,7 @@ const Index = () => {
   ]);
 
   const [newMaterial, setNewMaterial] = useState({ name: '', description: '', minStock: '' });
+  const [newOrder, setNewOrder] = useState({ materialId: '', quantity: '' });
 
   const addMaterial = () => {
     if (newMaterial.name && newMaterial.description && newMaterial.minStock) {
@@ -78,6 +79,20 @@ const Index = () => {
       };
       setMaterials([...materials, material]);
       setNewMaterial({ name: '', description: '', minStock: '' });
+    }
+  };
+
+  const addOrder = () => {
+    if (newOrder.materialId && newOrder.quantity) {
+      const order: Order = {
+        id: orders.length + 1,
+        materialId: parseInt(newOrder.materialId),
+        quantity: parseInt(newOrder.quantity),
+        orderDate: new Date().toISOString(),
+        status: 'pending',
+      };
+      setOrders([...orders, order]);
+      setNewOrder({ materialId: '', quantity: '' });
     }
   };
 
@@ -257,9 +272,41 @@ const Index = () => {
 
           <TabsContent value="orders" className="space-y-6 mt-6">
             <Card className="shadow-lg border-0">
+              <CardHeader className="bg-gradient-to-r from-primary to-blue-600 text-white">
+                <CardTitle className="text-xl">Создать заказ вручную</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <select
+                    value={newOrder.materialId}
+                    onChange={(e) => setNewOrder({ ...newOrder, materialId: e.target.value })}
+                    className="border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:border-primary"
+                  >
+                    <option value="">Выберите материал</option>
+                    {materials.map((material) => (
+                      <option key={material.id} value={material.id}>
+                        {material.name}
+                      </option>
+                    ))}
+                  </select>
+                  <Input
+                    placeholder="Количество"
+                    type="number"
+                    value={newOrder.quantity}
+                    onChange={(e) => setNewOrder({ ...newOrder, quantity: e.target.value })}
+                    className="border-slate-300 focus:border-primary"
+                  />
+                  <Button onClick={addOrder} className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium">
+                    Создать заказ
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-lg border-0">
               <CardHeader className="bg-white border-b border-slate-200 flex flex-row items-center gap-3">
                 <Icon name="ShoppingCart" className="text-primary" size={24} />
-                <CardTitle className="text-xl text-foreground">Автоматически созданные заказы</CardTitle>
+                <CardTitle className="text-xl text-foreground">Список заказов</CardTitle>
               </CardHeader>
               <CardContent className="p-0">
                 <div className="overflow-x-auto">
@@ -293,12 +340,12 @@ const Index = () => {
               </CardContent>
             </Card>
 
-            <Card className="shadow-lg border-0 bg-blue-50 border-blue-200">
+            <Card className="shadow-lg border-0 bg-amber-50 border-amber-200">
               <CardContent className="pt-6">
                 <div className="flex items-start gap-3">
-                  <Icon name="Info" className="text-blue-600 mt-0.5" size={20} />
-                  <p className="text-sm text-blue-900">
-                    <strong>Информация:</strong> Заказы автоматически закрываются при поступлении материалов выше минимального уровня
+                  <Icon name="AlertTriangle" className="text-amber-600 mt-0.5" size={20} />
+                  <p className="text-sm text-amber-900">
+                    <strong>Внимание!</strong> Для материалов с низким запасом были автоматически созданы новые заказы
                   </p>
                 </div>
               </CardContent>
